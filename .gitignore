@@ -2,3 +2,4 @@
 node_modules
 .tmp
 npm-debug.log
+./01_Fundamental_Concepts_in_LlamaIndex/persisted_storage
