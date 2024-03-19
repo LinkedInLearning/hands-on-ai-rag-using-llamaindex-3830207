@@ -25,7 +25,7 @@ conda activate lil_llama_index
 Jupyter is a popular interactive computing platform, and JupyterLab is its next-generation user interface. You can install both using the following command:
 
 ```
-conda install jupyter jupyterlab
+conda install ipykernel jupyter jupyterlab
 ```
 
 ##### Verify the installation
@@ -78,3 +78,8 @@ pip install llama-index-embeddings-cohere llama-index-embeddings-openai llama-in
 pip install llama-index-postprocessor-cohere-rerank
 ```
 
+# Link IPython kernel to Conda Enviornment
+
+```
+python -m ipykernel install --user --name=lil_llama_index --display-name "LlamaIndex (LinkedIn Learning)"
+```
