@@ -73,8 +73,9 @@ We'll make use of Cohere, Mistral, and OpenAI throughout the course.
 
 ```
 pip install cohere openai mistralai 
+pip insall fastembed
 pip install llama-index-llms-openai llama-index-llms-mistralai llama-index-llms-cohere 
-pip install llama-index-embeddings-cohere llama-index-embeddings-openai llama-index-embeddings-mistralai 
+pip install llama-index-embeddings-cohere llama-index-embeddings-openai llama-index-embeddings-mistralai llama-index-embeddings-fastembed
 pip install llama-index-postprocessor-cohere-rerank
 ```
 
