@@ -9,7 +9,7 @@ Conda is a package manager that helps manage different software environments. If
 Open your terminal or command prompt and run the following command to create a new Conda environment named `lil_llama_index`, and install Python 3.10.
 
 ```
-conda create --name lil_llama_index python==3.10
+conda create --name lil_llama_index python==3.10 python-dotenv
 ```
 
 ### Activate the Conda environment
