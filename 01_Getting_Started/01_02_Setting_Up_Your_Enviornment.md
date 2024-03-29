@@ -40,11 +40,13 @@ jupyter lab
 
 LlamaIndex is nicely seperated into numerous smaller packages. 
 
-For now, let's just install the starter package to get started. As we progress along the course I will add additional libraries as `pip install ...` in the first cell of every notebook.
+For now, let's just install the starter package along with `LlamaParse`, which will help us parse and represent files for efficient retrieval and context augmentation. 
+
+As we progress along the course I will add additional libraries as needed with `pip install ...` in the first cell of every notebook.
 
 
 ```
-pip install llama-index==0.10.25
+pip install llama-index==0.10.25 llama-parse
 ```
 
 LlamaIndex is a new library, and changes fast. It's important that you pin your version to the one above so you don't run into any code errors as you follow along with me throughout the course.
