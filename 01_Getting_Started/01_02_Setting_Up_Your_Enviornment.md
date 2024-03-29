@@ -44,7 +44,7 @@ For now, let's just install the starter package to get started. As we progress a
 
 
 ```
-pip install llama-index==0.10.22
+pip install llama-index==0.10.25
 ```
 
 LlamaIndex is a new library, and changes fast. It's important that you pin your version to the one above so you don't run into any code errors as you follow along with me throughout the course.
@@ -69,13 +69,13 @@ pip install llama-index-vector-stores-qdrant llama-index-readers-file
 
 # Install LLM Libraries
 
-We'll make use of Cohere, Mistral, and OpenAI throughout the course.
+We'll conistently make use of Cohere and FastEmbed throughout the course, so let's install those dependencies as well.
 
 ```
-pip install cohere openai mistralai 
-pip insall fastembed
-pip install llama-index-llms-openai llama-index-llms-mistralai llama-index-llms-cohere 
-pip install llama-index-embeddings-cohere llama-index-embeddings-openai llama-index-embeddings-mistralai llama-index-embeddings-fastembed
+pip install cohere
+pip install fastembed
+pip install llama-index-llms-cohere 
+pip install llama-index-embeddings-cohere llama-index-embeddings-fastembed
 pip install llama-index-postprocessor-cohere-rerank
 ```
 
