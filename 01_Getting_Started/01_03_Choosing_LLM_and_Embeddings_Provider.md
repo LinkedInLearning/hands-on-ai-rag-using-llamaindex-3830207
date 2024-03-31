@@ -81,6 +81,14 @@ Here are just a few points to help guide your decision:
 
 * Consider the input size the LLM can handle. Larger context windows allow passing more input and context to the model.
 
+## 🪪 Licnense
+
+* Different providers may have varying restrictions on how their models can be used. 
+
+* Some licenses may limit the use of the LLM or embeddings to non-commercial applications, require attribution, or restrict the types of applications for which the model can be used. 
+
+* Make sure you inspect the license and ensure that your project complies with the terms.
+
 ## 🌐 Consider language support and multilingual capabilities
 
 * If your project requires support for multiple languages, ensure that the LLM and embedding provider you choose can handle the languages you need.
