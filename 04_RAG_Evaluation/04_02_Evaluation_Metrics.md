@@ -4,14 +4,18 @@ A robust RAG evaluation requires carefully measuring the retriever and generator
 
 It's important to use the right metrics and construct datasets that match up with how the system will be used in the real world. Taking a close look at each component is the key to figuring out where RAG systems need to improve.
 
-
-**🎯 Context Relevance:** This checks how closely the context the retriever finds matches up with the question being asked.
-
-**📊 Context Recall:** This is the amount of relevant context chunks the retriever manages to retrieve, compared to the total amount of relevant chunks.
-
 **🤝 Faithfulness:** This looks at how factually accurate the answer is, based on the context the retriever found. We want to make sure the LLM isn't just making things up!
 
 **🔍 Answer Relevancy:** This measures how relevant the answer is to the user query, according to the retrieved context, and if it covers what the question is asking for.
+
+**🪡Context Precision:** Evaluates whether all of the ground-truth relevant items present in the contexts are appropriately ranked.
+
+**✅ Answer Correctness**:  This measures how accurate the generated answer is compared to the ground truth.
+
+**📊 Context Recall:** This is the amount of relevant context chunks the retriever manages to retrieve, compared to the total amount of relevant chunks.
+
+**🎯 Context Relevance:** This checks how closely the context the retriever finds matches up with the question being asked.
+
 
 Before computing evaluation metrics you need to make sure:
 
