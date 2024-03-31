@@ -1,7 +1,5 @@
 # Introduction to RAG Evaluation
 
-## Importance of RAG Evaluation
-
 📏 Evaluation gives you concrete numbers that tell you how accurate the system is, how relevant its answers are, and how well it's working overall.
 
 🔍 With an evaluation system in place you can compare different models, prompts, and context to figure out what works best.
@@ -33,9 +31,9 @@ A RAG pipeline has two main parts: retrieval and generation.
 
 This feteches external context from the vector database.
 
-If the retriever makes mistakes, those mistakes will carry over to the generator. So, essential that the retrieved sources are relevant to the user's query.  A good basiss of evaluation is how effective the retrieval is.
+If the retriever makes mistakes, those mistakes will carry over to the generator. The retrieved sources must be relevant to the user's query.
 
-You need a way to measure how closely the retrieved context matches what the user is asking about.
+So, You need a way to measure how closely the retrieved context matches what the user is asking about.
 
 ### **🤖 Generation component**
 
@@ -50,32 +48,33 @@ together.
 
 # Aspects of Evaluation
 
+When looking at retrieval and generation, there are two main things to measure: quality and generation.
 
+### 📊 Measuring Quality
 
+Quality is measured via relevance and faithfulness.
 
-## Evaluation Metrics
+ **🎯 Relevance** 
+ 
+ Relevance should be measured for the retrieved context and the generated response.
+ 
+ The retrieved context should be *precise and specific*. The more relvant each bit of retrieved context is, the better generation will be.
 
-Some key metrics proposed for RAG evaluation include:
+ The generated answers should be directly relevant with the user's query.
 
-- Context relevancy: How relevant the retrieved context is to the question.
+ **🤝 Faithfulness** 
+ 
+ This makes sure the answers the system generates *are faithful to the context it retrieved*. The generated response shouldn't have any contradictions or inconsistencies.
 
-- Context recall: Fraction of relevant context chunks retrieved. 
+### 🏹 Measuring Ability
 
-- Faithfulness: How factually correct the answer is based on the retrieved context.
+**🔇 Noise Robustness:** This checks how well the model handles noisy context. That is, context that are related to the question but don't have useful info.
 
-- Answer relevancy: How relevant and complete the generated answer is to the question
+**🙅‍♂️ Negative Rejection:** This looks at how well the model knows when to say, "I don't know." If the retrieved context doesn't have the info needed to answer the question, it should not try to answer.
 
-Other metrics like ROUGE, BLEU, etc. are also used to compare generated answers to reference answers.
+**🧩 Information Integration:** This tests how good the model is at putting together context from multiple documents. This is important for handling complex questions that need context from different sources.
 
+**🔮 Counterfactual Robustness:** This checks if the model can spot and ignore things in retrieved context that it knows are wrong, even if it's told there might be some misinformation info in them.
 
-## Challenges and Best Practices
+When evaluating **retrieval quality**, context relevance and noise robustness are important, while for evaluating **generation quality**, answer faithfulness, answer relevance, negative rejection, information integration, and counterfactual robustness should be considered.
 
-Some key challenges in RAG evaluation include:
-
-- Accounting for retrieval errors that impact generation quality
-- Evaluating end-to-end performance vs individual components 
-- Relying solely on automatic metrics vs incorporating human evaluation
-
-Best practices involve using a combination of automatic similarity metrics, human evaluation of aspects like relevance and coherence, and a diverse evaluation set covering different question complexities[3].
-
-In summary, a robust RAG evaluation requires carefully measuring the retriever and generator performance, using relevant metrics and datasets representative of real-world usage. Continued research aims to make this complex process more systematic and efficient. Granular evaluation of each component is key to identifying areas for improvement in RAG systems[3][5].
