@@ -53,12 +53,15 @@ llm = LLMSProviderClass(api_key = your_api_key, model="whatever-model-you-want-t
 
 ```
 
-## We'll use the Cohere API in this course.
+## We'll primarily use the Cohere API in this course.
 
 For the simple reason that it's free! Well, free to protoype with, anyway. And you don't need to enter any payment information.  You just need to sign up with GitHub, Google, or your e-mail and you're good to go. 
 
 Also, their [`Command-R`](https://txt.cohere.com/command-r/) model performs really well for RAG tasks.
 
+#### For RAG evaluation we'll make use of OpenAI
+
+It's just faster and easier to do, that's all. 
 ---
 
 # But, in the "real world", choosing the right Large Language Model (LLM) and embeddings provider for your project requires careful consideration of several factors. 
