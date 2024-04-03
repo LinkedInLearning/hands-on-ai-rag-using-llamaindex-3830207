@@ -77,4 +77,3 @@ Quality is measured via relevance and faithfulness.
 **🔮 Counterfactual Robustness:** This checks if the model can spot and ignore things in retrieved context that it knows are wrong, even if it's told there might be some misinformation info in them.
 
 When evaluating **retrieval quality**, context relevance and noise robustness are important, while for evaluating **generation quality**, answer faithfulness, answer relevance, negative rejection, information integration, and counterfactual robustness should be considered.
-
