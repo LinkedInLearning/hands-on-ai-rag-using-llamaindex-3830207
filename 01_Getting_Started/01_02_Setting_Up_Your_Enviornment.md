@@ -74,7 +74,7 @@ pip install llama-index-vector-stores-qdrant llama-index-readers-file
 We'll conistently make use of Cohere and FastEmbed throughout the course, so let's install those dependencies as well.
 
 ```
-pip install cohere==5.1.7
+pip install cohere==5.1.7 
 pip install fastembed
 pip install llama-index-llms-cohere==0.1.5 
 pip install llama-index-embeddings-cohere==0.1.5 llama-index-embeddings-fastembed
