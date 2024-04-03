@@ -14,8 +14,6 @@ It's important to use the right metrics and construct datasets that match up wit
 
 **📊 Context Recall:** This is the amount of relevant context chunks the retriever manages to retrieve, compared to the total amount of relevant chunks.
 
-**🎯 Context Relevance:** This checks how closely the context the retriever finds matches up with the question being asked.
-
 Before computing evaluation metrics you need to make sure:
 
 📂 That the evaluation datasets cover a wide range of question types, complexities, and domains. This helps assess the RAG system's performance across different scenarios and use cases.
