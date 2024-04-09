@@ -1,6 +1,6 @@
 # Choosing an LLM and Embeddings Provider
 
-There are several options available to you for choosing an LLM and embeddings provider.
+Several options are available to you for choosing an LLM and embeddings provider.
 
 You can choose from companies that build and serve their own LLMs, like:
 
@@ -15,7 +15,7 @@ You can choose from companies that build and serve their own LLMs, like:
 - [Google Gemini](https://ai.google.dev/)
 
 
-Or you can choose from companies that host and serve open source models via an API, like:
+Or you can choose from companies that host and serve open-source models via an API, like:
 
 - [Fireworks AI](https://fireworks.ai/models)
 
@@ -33,7 +33,7 @@ Or you can choose from companies that host and serve open source models via an A
 
 - [Clarifai](https://clarifai.com/explore/models)
 
-With countless other providers continuously entering the market trying to capture a share.
+With countless other providers continuously entering the market and trying to capture a share.
 
 LlamaIndex has integrations with dozens of LLM and Embeddings providers. You can see them all [here](https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/llms).
 
@@ -43,7 +43,7 @@ Whatever you end up choosing, the installation process will go something like th
 pip install llama-index-llms-<whatever-llm-provider-you-choose>
 ```
 
-And to instantiate the LLM, it will follow a pattern as shown below. Note, `LLMSProviderClass` is just a placeholder. Your chosen LLM provider will have some class you need to import.
+To instantiate the LLM, it will follow a pattern as shown below. Note that `LLMSProviderClass` is just a placeholder. Your chosen LLM provider will have some classes you need to import.
 
 ```python
 
@@ -55,16 +55,16 @@ llm = LLMSProviderClass(api_key = your_api_key, model="whatever-model-you-want-t
 
 ## We'll primarily use the Cohere API in this course.
 
-For the simple reason that it's free! Well, free to protoype with, anyway. And you don't need to enter any payment information.  You just need to sign up with GitHub, Google, or your e-mail and you're good to go. 
+For the simple reason that it's free! Well, it's free to prototype with, anyway. And you don't need to enter any payment information. You just need to sign up with GitHub, Google, or your e-mail and you're good to go. 
 
-Also, their [`Command-R`](https://txt.cohere.com/command-r/) model performs really well for RAG tasks.
+Also, their [`Command-R` and `Command-R-Plus`](https://txt.cohere.com/command-r/) model performs well for RAG tasks.
 
 #### For RAG evaluation we'll make use of OpenAI
 
 It's just faster and easier to do, that's all. 
 ---
 
-# But, in the "real world", choosing the right Large Language Model (LLM) and embeddings provider for your project requires careful consideration of several factors. 
+# But in the "real world," choosing the right large language model (LLM) and embeddings provider for your project requires careful consideration of several factors. 
 
 Here are just a few points to help guide your decision:
 
@@ -82,7 +82,7 @@ Here are just a few points to help guide your decision:
 
 * Understand each model's strengths and weaknesses, such as advanced coding, complex reasoning, commonsense reasoning, or efficiency in building AI assistants.
 
-* Consider the input size the LLM can handle. Larger context windows allow passing more input and context to the model.
+* Consider the input size the LLM can handle. Larger context windows allow more input and context to be passed to the model.
 
 ## 🪪 Licnense
 
@@ -94,7 +94,7 @@ Here are just a few points to help guide your decision:
 
 ## 🌐 Consider language support and multilingual capabilities
 
-* If your project requires support for multiple languages, ensure that the LLM and embedding provider you choose can handle the languages you need.
+* If your project requires support for multiple languages, ensure the LLM and embedding provider you choose can handle the languages you need.
 
 * Evaluate the quality of the model's output in each language and its ability to understand and generate text in a culturally appropriate manner.
 
