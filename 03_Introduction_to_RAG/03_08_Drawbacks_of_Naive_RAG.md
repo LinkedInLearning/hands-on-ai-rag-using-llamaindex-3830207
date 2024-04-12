@@ -24,19 +24,23 @@ While the naive RAG workflow provides a foundation for enhancing LLMs with exter
 
 2. 🚨 **Retrieval Difficulties**
 
-   - 🤷 Low relevance and accuracy of the retrieved data about the user's query.
+   - **Low Precision:** Not all retrieved data matches the query, leading to potential errors and inaccuracies. 
 
-   - 🙋 Limited user query effectiveness in fetching the most appropriate information.
+   - **Low Recall:** Failure to retrieve all relevant data limits the context available for response generation.
 
-   - 🔁 Retrieval of redundant or overlapping information, leading to inefficient use of computational resources.
+   - Users query effectiveness in fetching the most appropriate information.
+
+   - Retrieval of redundant or overlapping information, leading to inefficient use of computational resources.
 
 3. ⚠️ **Generation Problems**
 
-   - 🧩 Difficulty in effectively integrating the retrieved content into the generated response while maintaining coherence and relevance.
+  - **Hallucination:** The model may generate fictitious responses not grounded in retrieved data, or poor merging of retrieved data can result in incoherent or disjointed outputs.
 
-   - 🤖 Risk of overly relying on external information, leading to responses that lack originality or fail to capture the nuances of the user's query.
+   - Hard to ascertain the relative relevance of retrieved context for the generation task.
 
-   - 🚫 Potential for generating biased, inconsistent, or irrelevant responses due to the limitations of the retrieved data or the generation process itself.
+   - Risk of overly relying on external information, or merely echo the retrieved data without adding new insights, leading to responses that lack originality or fail to capture the nuances of the user's query.
+
+   - Potential for generating biased, inconsistent, or irrelevant responses due to the limitations of the retrieved data or the generation process itself.
 
 These challenges must be addressed to build sophisticated and reliable RAG systems that can effectively leverage external knowledge to enhance the performance of language models.
 
