@@ -1,12 +1,13 @@
 from IPython.display import Markdown, display
 from qdrant_client import QdrantClient
-from llama_index.core import VectorStoreIndex
-from llama_index.vector_stores.qdrant import QdrantVectorStore
-from llama_index.core.settings import Settings
-from llama_index.llms.cohere import Cohere
-from llama_index.embeddings.fastembed import FastEmbedEmbedding
+from llama_index.core import VectorStoreIndex, StorageContext
 from llama_index.core.ingestion import IngestionPipeline
 from llama_index.core.query_pipeline import QueryPipeline
+from llama_index.core.settings import Settings
+from llama_index.core.storage.docstore import SimpleDocumentStore
+from llama_index.embeddings.fastembed import FastEmbedEmbedding
+from llama_index.llms.cohere import Cohere
+from llama_index.vector_stores.qdrant import QdrantVectorStore
 
 def setup_llm(api_key, model="command-r"):
     """
@@ -27,9 +28,9 @@ def setup_embed_model(model_name="BAAI/bge-large-en-v1.5-quantized"):
     """
     Settings.embed_model = FastEmbedEmbedding(model_name=model_name)
 
-def create_vector_store_index(qdrant_url, qdrant_api_key, collection_name):
+def setup_vector_store(qdrant_url, qdrant_api_key, collection_name):
     """
-    Creates and returns a VectorStoreIndex instance configured with the specified parameters.
+    Creates and returns a QdrantVectorStore instance configured with the specified parameters.
 
     Parameters:
     - qdrant_url (str): The URL for the Qdrant service.
@@ -37,34 +38,66 @@ def create_vector_store_index(qdrant_url, qdrant_api_key, collection_name):
     - collection_name (str): The name of the collection to be used in the vector store.
 
     Returns:
-    - VectorStoreIndex: An instance of VectorStoreIndex configured with the specified Qdrant client and vector store.
+    - QdrantVectorStore: An instance of QdrantVectorStore configured with the specified Qdrant client
     """
     client = QdrantClient(location=qdrant_url, api_key=qdrant_api_key)
     vector_store = QdrantVectorStore(client=client, collection_name=collection_name)
-    index = VectorStoreIndex.from_vector_store(vector_store=vector_store, embed_model=Settings.embed_model)
+    return vector_store
+
+def get_documents_from_docstore(persist_dir):
+    """
+    Retrieves the Document objects out of a specified document store.
+
+    Parameters:
+    - persist_dir: The document store from which to retrieve the documents.
+
+    Returns:
+    - list: A list of Documents from the document store.
+    """
+    docstore = SimpleDocumentStore.from_persist_dir(persist_dir=persist_dir)
+    documents = list(docstore.docs.values())
+    return documents
+
+def create_index(**kwargs):
+    """
+    Creates and returns a VectorStoreIndex instance configured with the specified parameters.
+
+    Parameters:
+    **kwargs: Additional keyword arguments for configuring the index, such as:
+        - embed_model: The embedding model to be used in the index.
+        - vector_store: The vector store to be used in the index.
+        - nodes: The nodes to be used in the index.
+        - storage_context: The storage context to be used in the index.
+
+    Returns:
+    - VectorStoreIndex: An instance of VectorStoreIndex configured with the specified Qdrant client and vector store.
+    """
+
+    index = VectorStoreIndex.from_vector_store(embed_model=Settings.embed_model, **kwargs)
     return index
 
-def create_ingestion_pipeline(transformations, **kwargs):
+def ingest(transformations, documents, **kwargs):
     """
-    Creates and returns an IngestionPipeline instance configured with the specified parameters.
+    Createsan IngestionPipeline and ingests the documents.
 
     Parameters:
     - transformations (list): A list of transformations to apply in the pipeline.
+    - documents (list): A list of Document objects to be ingested.
     - **kwargs: Additional keyword arguments for configuring the pipeline, such as:
         - docstore: An instance of a document store.
         - vector_store: An instance of a vector store.
         - cache: An instance of an ingestion cache.
 
     Returns:
-    - IngestionPipeline: An instance of IngestionPipeline configured with the specified parameters.
+    
     """
-    # Create the ingestion pipeline with the provided transformations and additional configurations
+    
     pipeline = IngestionPipeline(
         transformations=transformations,
         **kwargs
     )
 
-    return pipeline
+    pipeline.run(documents)
 
 def create_query_pipeline(chain, verbose=True):
     """
@@ -84,20 +117,28 @@ def create_query_pipeline(chain, verbose=True):
 
     return pipeline
 
-# Existing imports and functions...
-
-def create_query_engine(index, **kwargs):
+def create_query_engine(index, mode, **kwargs):
     """
     Creates and returns a query engine from the given index with the specified configurations.
 
     Parameters:
     - index: The index object from which to create the query engine. This should be an instance of VectorStoreIndex or similar, which has the as_query_engine method.
+    - mode (str): The mode of the query engine to create. Possible values are "chat", "query", and "retrieve".
     - **kwargs: Additional keyword arguments for configuring the query engine, such as similarity_top_k and return_sources.
 
     Returns:
     - A query engine configured with the specified parameters.
     """
-    return index.as_query_engine(**kwargs)
+    if mode =="chat":
+        return index.as_chat_engine(**kwargs)
+
+    if mode == "query":
+        return index.as_query_engine(**kwargs)
+
+    if mode == "retrieve":
+        return index.as_retriever(**kwargs)
+    else:
+        raise ValueError(f"Invalid mode: {mode}. Pick one of 'chat', 'query', or 'retrieve'.")
 
 def display_prompt_dict(prompts_dict):
     """
