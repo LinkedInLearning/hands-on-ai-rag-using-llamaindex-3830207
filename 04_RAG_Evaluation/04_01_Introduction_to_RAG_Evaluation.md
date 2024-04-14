@@ -23,6 +23,24 @@ Source: [AI Makerspace](https://youtu.be/Anr1br0lLz8)
 
 Take a moment to pause and think about the two primary components of this system.
 
+Here's the cleaned-up markdown table for the RAG Challenges:
+
+# An Overview of RAG Challenges
+
+| Stage        | Challenge Area            | Specific Challenges          | Description                                                                 |
+|--------------|---------------------------|------------------------------|-----------------------------------------------------------------------------|
+| Retrieval    | Relevance                 | Precision & Recall Issues    | Difficulty retrieving all relevant documents while excluding irrelevant ones. |
+|              |                           | "Lost in the Middle"         | Challenges in retrieving documents with moderate relevance.                  |
+| Augmentation | Temporal Relevance        | Outdated Information         | Augmentation data may be outdated, leading to inaccurate information.        |
+|              | Contextual Understanding  | Missing Relational Context   | Difficulty understanding relationships between documents due to lack of context. |
+| Generation   | Hallucination             | Factual Errors               | Generation of plausible-sounding but incorrect information.                  |
+|              | Bias & Toxicity           | Harmful & Inappropriate Outputs | Generation of biased, offensive, or harmful content.                        |
+|              | Response Diversity        | Limited Creativity           | Challenges in generating diverse and creative responses.                     |
+
+This format organizes the information clearly, aligning all descriptions and maintaining consistency in capitalization and terminology.
+
+
+
 ## Evaluating Different RAG Components
 
 A RAG pipeline has two main parts: retrieval and generation.
