@@ -1,3 +1,5 @@
+import random
+from collections import defaultdict
 from IPython.display import Markdown, display
 from qdrant_client import QdrantClient
 from llama_index.core import VectorStoreIndex, StorageContext
@@ -5,11 +7,14 @@ from llama_index.core.ingestion import IngestionPipeline
 from llama_index.core.query_pipeline import QueryPipeline
 from llama_index.core.settings import Settings
 from llama_index.core.storage.docstore import SimpleDocumentStore
+from llama_index.embeddings.cohere import CohereEmbedding
+from llama_index.embeddings.openai import OpenAIEmbedding
+
 from llama_index.embeddings.fastembed import FastEmbedEmbedding
 from llama_index.llms.cohere import Cohere
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 
-def setup_llm(api_key, model="command-r"):
+def setup_llm(api_key, model="command-r-plus"):
     """
     Configures the LLM (Language Learning Model) settings.
 
@@ -19,14 +24,21 @@ def setup_llm(api_key, model="command-r"):
     """
     Settings.llm = Cohere(model=model, api_key=api_key)
 
-def setup_embed_model(model_name="BAAI/bge-large-en-v1.5-quantized"):
+def setup_embed_model(provider, model_name=None):
     """
     Configures the embedding model settings.
 
     Parameters:
     - model_name (str): The model identifier for the embedding service.
     """
-    Settings.embed_model = FastEmbedEmbedding(model_name=model_name)
+    if provider == "cohere":
+        Settings.embed_model = CohereEmbedding(model_name="embed-english-v3.0")
+    if providr == "openai":
+        Settings.embed_model = OpenAIEmbedding(model_name="text-embedding-3-large")
+    if provider == "fastembed":
+        Settings.embed_model = FastEmbedEmbedding(model_name="BAAI/bge-base-en-v1.5")
+    else:
+        raise ValueError(f"Invalid mode: {provider}. Pick one of 'cohere', 'fastembed', or 'openai'.")
 
 def setup_vector_store(qdrant_url, qdrant_api_key, collection_name):
     """
@@ -74,6 +86,7 @@ def create_index(**kwargs):
     """
 
     index = VectorStoreIndex.from_vector_store(embed_model=Settings.embed_model, **kwargs)
+
     return index
 
 def ingest(transformations, documents, **kwargs):
@@ -153,3 +166,71 @@ def display_prompt_dict(prompts_dict):
     for k, p in prompts_dict.items():
         markdown_output += f"""**Prompt Key**: {k}\n**Text:**\n```\n{p.get_template()}\n```\n\n"""
     display(Markdown(markdown_output))
+
+def group_documents_by_author(documents):
+    """
+    Group documents by author.
+
+    This function organizes a list of document objects into a dictionary where each key is an author's name,
+    and the value is a list of all documents authored by that person. It leverages defaultdict to automatically
+    handle any authors not previously encountered without raising a KeyError.
+
+    Args:
+        documents (list): A list of document objects, each having a 'metadata' dictionary that includes an 'author' key.
+
+    Returns:
+        defaultdict: A dictionary where keys are author names and values are lists of documents for those authors.
+    """
+    # Initialize a defaultdict to store lists of documents, organized by author.
+    documents_by_author = defaultdict(list)
+
+    # Loop over each document in the provided list.
+    for doc in documents:
+        # Retrieve the 'author' from the document's metadata. Default to None if 'author' key is missing.
+        author = doc.metadata.get('author', None)
+
+        # Check if the author exists. If so, append the document to the corresponding list in the dictionary.
+        if author:
+            documents_by_author[author].append(doc)
+        else:
+            # If no author is specified, print a warning. These documents will not be added to any author group.
+            print("Warning: A document without an author was encountered and skipped.")
+
+    # Return the populated defaultdict containing grouped documents.
+    return documents_by_author
+
+def sample_documents(documents_by_author, num_samples=10):
+    """
+    Randomly sample a specific number of documents for each author from a grouped dictionary.
+    Only documents with more than 500 characters are considered for sampling.
+
+    This function takes a dictionary where each key is an author's name and the value is a list of document
+    objects authored by that person. It attempts to sample a specified number of documents for each author.
+    If an author does not have enough documents to meet the sample size, it prints a warning.
+
+    Args:
+        documents_by_author (dict): A dictionary where keys are authors' names and values are lists of documents.
+        num_samples (int): The desired number of documents to sample from each author's list.
+
+    Returns:
+        list: A list containing the randomly sampled documents across all authors, up to the specified number
+              per author, where possible.
+    """
+    # Initialize an empty list to store the sampled documents.
+    sampled_documents = []
+
+    # Iterate over each author and their corresponding documents in the dictionary.
+    for author, docs in documents_by_author.items():
+        # Filter documents with more than 500 characters.
+        valid_docs = [doc for doc in docs if len(doc.get_content()) > 500]
+
+        # Check if the current author has enough documents to meet the requested sample size.
+        if len(valid_docs) >= num_samples:
+            # If yes, randomly sample the documents and extend the sampled_documents list with the results.
+            sampled_documents.extend(random.sample(valid_docs, num_samples))
+        else:
+            # If no, print a warning message indicating the author and the deficiency in document count.
+            print(f"Author {author} does not have enough valid documents to sample {num_samples}.")
+
+    # Return the list of all sampled documents.
+    return sampled_documents
