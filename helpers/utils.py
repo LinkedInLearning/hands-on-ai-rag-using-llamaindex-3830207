@@ -109,8 +109,8 @@ def ingest(transformations, documents, **kwargs):
         transformations=transformations,
         **kwargs
     )
-
-    pipeline.run(documents)
+    
+    return pipeline.run(nodes=documents)
 
 def create_query_pipeline(chain, verbose=True):
     """
