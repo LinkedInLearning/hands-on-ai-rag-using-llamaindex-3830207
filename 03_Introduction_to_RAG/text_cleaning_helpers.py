@@ -77,7 +77,6 @@ def clean_extra_whitespace(text: str) -> str:
     cleaned_text = re.sub(r"([ ]{2,})", " ", cleaned_text)
     return cleaned_text.strip()
 
-
 def group_broken_paragraphs(
     text: str,
     line_split: re.Pattern[str] = PARAGRAPH_PATTERN_RE,
