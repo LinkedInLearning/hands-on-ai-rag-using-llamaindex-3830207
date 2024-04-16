@@ -21,10 +21,6 @@ Diagram illustrating the components of a RAG system, including the retriever and
 
 Source: [AI Makerspace](https://youtu.be/Anr1br0lLz8)
 
-Take a moment to pause and think about the two primary components of this system.
-
-Here's the cleaned-up markdown table for the RAG Challenges:
-
 # An Overview of RAG Challenges
 
 | Stage        | Challenge Area            | Specific Challenges          | Description                                                                 |
@@ -36,10 +32,6 @@ Here's the cleaned-up markdown table for the RAG Challenges:
 | Generation   | Hallucination             | Factual Errors               | Generation of plausible-sounding but incorrect information.                  |
 |              | Bias & Toxicity           | Harmful & Inappropriate Outputs | Generation of biased, offensive, or harmful content.                        |
 |              | Response Diversity        | Limited Creativity           | Challenges in generating diverse and creative responses.                     |
-
-This format organizes the information clearly, aligning all descriptions and maintaining consistency in capitalization and terminology.
-
-
 
 ## Evaluating Different RAG Components
 
