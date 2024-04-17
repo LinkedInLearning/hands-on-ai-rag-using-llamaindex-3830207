@@ -24,7 +24,7 @@ def setup_llm(api_key, model="command-r-plus"):
     """
     Settings.llm = Cohere(model=model, api_key=api_key)
 
-def setup_embed_model(provider, model_name=None):
+def setup_embed_model(provider, **kwargs):
     """
     Configures the embedding model settings.
 
@@ -32,13 +32,13 @@ def setup_embed_model(provider, model_name=None):
     - model_name (str): The model identifier for the embedding service.
     """
     if provider == "cohere":
-        Settings.embed_model = CohereEmbedding(model_name="embed-english-v3.0")
-    if providr == "openai":
-        Settings.embed_model = OpenAIEmbedding(model_name="text-embedding-3-large")
-    if provider == "fastembed":
-        Settings.embed_model = FastEmbedEmbedding(model_name="BAAI/bge-base-en-v1.5")
+        Settings.embed_model = CohereEmbedding(model_name="embed-english-v3.0", **kwargs)
+    elif provider == "openai":
+        Settings.embed_model = OpenAIEmbedding(model_name="text-embedding-3-large", **kwargs)
+    elif provider == "fastembed":
+        Settings.embed_model = FastEmbedEmbedding(model_name="BAAI/bge-base-en-v1.5", **kwargs)
     else:
-        raise ValueError(f"Invalid mode: {provider}. Pick one of 'cohere', 'fastembed', or 'openai'.")
+        raise ValueError(f"Invalid provider: {provider}. Pick one of 'cohere', 'fastembed', or 'openai'.")
 
 def setup_vector_store(qdrant_url, qdrant_api_key, collection_name):
     """
@@ -145,10 +145,10 @@ def create_query_engine(index, mode, **kwargs):
     if mode =="chat":
         return index.as_chat_engine(**kwargs)
 
-    if mode == "query":
+    elif mode == "query":
         return index.as_query_engine(**kwargs)
 
-    if mode == "retrieve":
+    elif mode == "retrieve":
         return index.as_retriever(**kwargs)
     else:
         raise ValueError(f"Invalid mode: {mode}. Pick one of 'chat', 'query', or 'retrieve'.")
