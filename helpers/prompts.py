@@ -29,3 +29,18 @@ yet concise. It must be based on your thinking and writing, which is below:
 DO NOT use any qualifiers, relative clauses, or introductory modifiers in your answer. Provide your answer question using the second person
 perspective, speaking directly to your mentee, in the form of a trusted mentor providing actionable advice.
 """
+
+GROUNDEDNESS_PROMPT = """You are given context and a question. Provide a 'total rating' from 1 to 5 indicating 
+the extent to which the question can be answered clearly using the context. 1 = not answerable, 5 = clearly answerable
+
+Format your response as:
+
+Evaluation: (rationale)
+Total rating: (a number in the range 1-5)
+
+Content and question are below:
+----------------------
+Context: {context}
+Question: {question}
+----------------------
+"""
