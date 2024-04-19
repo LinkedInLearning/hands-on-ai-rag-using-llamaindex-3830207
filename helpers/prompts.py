@@ -4,7 +4,7 @@ answerable with a specific, concise piece of information from the context.
 
 The context is below:
 ----------------------
-{context}
+{context_str}
 ----------------------
 
 Your question MUST be short, clear, and based on the essence of the context. DO NOT use any qualifiers, relative clauses, or introductory modifiers.  
@@ -16,14 +16,14 @@ ANSWER_GEN_PROMPT = """You're a trusted mentor to an adult mentee. Your mentee i
 Below is your mentee's question:
 
 ----------------------
-{question}
+{query_str}
 ----------------------
 
 You've previously done some thinking and writing on the exact question your mentee has asked. Your answer MUST be actionable
 yet concise. It must be based on your thinking and writing, which is below:
 
 ----------------------
-{context}
+{context_str}
 ----------------------
 
 DO NOT use any qualifiers, relative clauses, or introductory modifiers in your answer. Provide your answer question using the second person
@@ -40,7 +40,7 @@ Total rating: (a number in the range 1-5)
 
 Content and question are below:
 ----------------------
-Context: {context}
-Question: {question}
+Context: {context_str}
+Question: {query_str}
 ----------------------
 """
