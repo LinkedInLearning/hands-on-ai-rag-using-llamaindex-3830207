@@ -14,7 +14,7 @@ from llama_index.embeddings.fastembed import FastEmbedEmbedding
 from llama_index.llms.cohere import Cohere
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 
-def setup_llm(api_key, model="command-r-plus"):
+def setup_llm(api_key, model="command-r-plus", **kwargs):
     """
     Configures the LLM (Language Learning Model) settings.
 
@@ -22,7 +22,7 @@ def setup_llm(api_key, model="command-r-plus"):
     - api_key (str): The API key for authenticating with the LLM service.
     - model (str): The model identifier for the LLM service.
     """
-    Settings.llm = Cohere(model=model, api_key=api_key)
+    Settings.llm = Cohere(model=model, api_key=api_key, **kwargs)
 
 def setup_embed_model(provider, **kwargs):
     """
