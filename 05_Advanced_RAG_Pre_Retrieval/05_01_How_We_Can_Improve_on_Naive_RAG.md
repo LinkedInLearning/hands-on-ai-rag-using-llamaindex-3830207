@@ -8,7 +8,7 @@
 | RAG Paradigm  | Key Techniques |
 |---------------|----------------|
 | **Naive RAG** | 1. **Indexing:** Data cleansing, extraction, chunking, and vectorization<br>2. **Retrieval:** Similarity comparison between query and indexed chunks<br>3. **Generation:** Synthesizing query and retrieved documents into a prompt for LLM response |
-| **Advanced RAG** | **Pre-Retrieval Process:**<br>1. Optimizing data indexing (enhancing granularity, structure, metadata, alignment, mixed retrieval)<br>2. Fine-tuning embedding models for domain-specific relevance<br>3. Using dynamic embeddings (e.g., OpenAI's embeddings-ada-02)<br>**Post-Retrieval Process:**<br>1. Re-ranking retrieved information (diversity ranking, alternating best document placement, recalculating semantic similarity)<br>2. Prompt compression (importance estimation, granular compressors, summarization) |
+| **Advanced RAG** | **Pre-Retrieval Process:**<br>1. Optimizing data indexing (enhancing granularity, structure, metadata, alignment, mixed retrieval)<br>2. Fine-tuning embedding models for domain-specific relevance<br>3. Using dynamic embeddings <br>**Post-Retrieval Process:**<br>1. Re-ranking retrieved information (diversity ranking, alternating best document placement, recalculating semantic similarity)<br>2. Prompt compression (importance estimation, granular compressors, summarization) |
 | **Modular RAG**  | 1. Integrating new modules (e.g., search module for specific scenarios, memory module for retrieval guidance)<br>2. Allowing serialized pipeline or end-to-end training across modules<br>3. Inheriting and building upon Advanced RAG techniques |
 
 # **Pre-retrieval Optimization**
