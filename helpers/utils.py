@@ -15,9 +15,12 @@ from llama_index.embeddings.openai import OpenAIEmbedding
 
 from llama_index.embeddings.fastembed import FastEmbedEmbedding
 from llama_index.llms.cohere import Cohere
+from llama_index.llms.openai import OpenAI
+from llama_index.llms.mistralai import MistralAI
+
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 
-def setup_llm(api_key, model="command-r-plus", **kwargs):
+def setup_llm(provider, model, api_key, **kwargs):
     """
     Configures the LLM (Language Learning Model) settings.
 
@@ -25,7 +28,15 @@ def setup_llm(api_key, model="command-r-plus", **kwargs):
     - api_key (str): The API key for authenticating with the LLM service.
     - model (str): The model identifier for the LLM service.
     """
-    Settings.llm = Cohere(model=model, api_key=api_key, **kwargs)
+        
+    if provider == "cohere":
+        Settings.llm = Cohere(model=model, api_key=api_key, **kwargs)
+    elif provider == "openai":
+        Settings.llm = OpenAI(model=model, api_key=api_key, **kwargs)
+    elif provider == "mistral":
+        Settings.llm = MistralAI(model=model, api_key=api_key, **kwargs)
+    else:
+        raise ValueError(f"Invalid provider: {provider}. Pick one of 'cohere', 'openai', or 'mistral'.")
 
 def setup_embed_model(provider, **kwargs):
     """
@@ -43,7 +54,7 @@ def setup_embed_model(provider, **kwargs):
     else:
         raise ValueError(f"Invalid provider: {provider}. Pick one of 'cohere', 'fastembed', or 'openai'.")
 
-def setup_vector_store(qdrant_url, qdrant_api_key, collection_name):
+def setup_vector_store(qdrant_url, qdrant_api_key, collection_name, enable_hybrid=False):
     """
     Creates and returns a QdrantVectorStore instance configured with the specified parameters.
 
@@ -56,7 +67,7 @@ def setup_vector_store(qdrant_url, qdrant_api_key, collection_name):
     - QdrantVectorStore: An instance of QdrantVectorStore configured with the specified Qdrant client
     """
     client = QdrantClient(location=qdrant_url, api_key=qdrant_api_key)
-    vector_store = QdrantVectorStore(client=client, collection_name=collection_name)
+    vector_store = QdrantVectorStore(client=client, collection_name=collection_name, enable_hybrid=enable_hybrid)
     return vector_store
 
 def get_documents_from_docstore(persist_dir):
@@ -73,7 +84,7 @@ def get_documents_from_docstore(persist_dir):
     documents = list(docstore.docs.values())
     return documents
 
-def create_index(**kwargs):
+def create_index(from_where, embed_model=Settings.embed_model, **kwargs):
     """
     Creates and returns a VectorStoreIndex instance configured with the specified parameters.
 
@@ -87,10 +98,15 @@ def create_index(**kwargs):
     Returns:
     - VectorStoreIndex: An instance of VectorStoreIndex configured with the specified Qdrant client and vector store.
     """
+    if from_where=="vector_store":
+        index = VectorStoreIndex.from_vector_store(embed_model=embed_model, **kwargs)
+        return index
+    elif from_where=="docs":
+        index = VectorStoreIndex.from_documents(embed_model=embed_model, **kwargs)
+        return index
+    else:
+        raise ValueError(f"Invalid option: {from_where}. Pick one of 'vector_store', or 'docs'.")
 
-    index = VectorStoreIndex.from_vector_store(embed_model=Settings.embed_model, **kwargs)
-
-    return index
 
 def ingest(transformations, documents, **kwargs):
     """
