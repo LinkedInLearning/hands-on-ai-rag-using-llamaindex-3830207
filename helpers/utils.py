@@ -4,7 +4,7 @@ from datasets import Dataset
 from tqdm import tqdm
 from collections import defaultdict
 from IPython.display import Markdown, display
-from qdrant_client import QdrantClient
+from qdrant_client import QdrantClient, AsyncQdrantClient
 from llama_index.core import VectorStoreIndex, StorageContext
 from llama_index.core.ingestion import IngestionPipeline
 from llama_index.core.query_pipeline import QueryPipeline
@@ -67,7 +67,8 @@ def setup_vector_store(qdrant_url, qdrant_api_key, collection_name, enable_hybri
     - QdrantVectorStore: An instance of QdrantVectorStore configured with the specified Qdrant client
     """
     client = QdrantClient(location=qdrant_url, api_key=qdrant_api_key)
-    vector_store = QdrantVectorStore(client=client, collection_name=collection_name, enable_hybrid=enable_hybrid)
+    aclient = AsyncQdrantClient(location=qdrant_url, api_key=qdrant_api_key)
+    vector_store = QdrantVectorStore(client=client, aclient=aclient, collection_name=collection_name, enable_hybrid=enable_hybrid)
     return vector_store
 
 def get_documents_from_docstore(persist_dir):
@@ -106,7 +107,6 @@ def create_index(from_where, embed_model=Settings.embed_model, **kwargs):
         return index
     else:
         raise ValueError(f"Invalid option: {from_where}. Pick one of 'vector_store', or 'docs'.")
-
 
 def ingest(transformations, documents, **kwargs):
     """
