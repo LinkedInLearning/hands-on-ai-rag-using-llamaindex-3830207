@@ -14,7 +14,6 @@ You can choose from companies that build and serve their own LLMs, like:
 
 - [Google Gemini](https://ai.google.dev/)
 
-
 Or you can choose from companies that host and serve open-source models via an API, like:
 
 - [Fireworks AI](https://fireworks.ai/models)
@@ -55,7 +54,7 @@ llm = LLMSProviderClass(api_key = your_api_key, model="whatever-model-you-want-t
 
 ## We'll primarily use the Cohere API in this course.
 
-For the simple reason that it's free! Well, it's free to prototype with, anyway. And you don't need to enter any payment information. You just need to sign up with GitHub, Google, or your e-mail and you're good to go. 
+For the simple reason that it's free! Well, it's free to prototype with, anyway. And you don't need to enter any payment information. You just need to sign up with GitHub, Google, or your e-mail and you're good to go.
 
 Also, their [`Command-R` and `Command-R-Plus`](https://txt.cohere.com/command-r/) model performs well for RAG tasks.
 
@@ -84,7 +83,7 @@ Here are just a few points to help guide your decision:
 
 * Consider the input size the LLM can handle. Larger context windows allow more input and context to be passed to the model.
 
-## 🪪 Licnense
+## 🪪 License
 
 * Different providers may have varying restrictions on how their models can be used. 
 

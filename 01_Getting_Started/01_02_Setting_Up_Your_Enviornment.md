@@ -43,7 +43,7 @@ LlamaIndex is nicely seperated into numerous smaller packages.
 For now, let's just install the starter package. As we progress along the course I will add additional libraries as needed with `pip install ...` in the first cell of every notebook.
 
 ```python
-pip install llama-index==0.10.29
+pip install llama-index==0.10.37
 ```
 
 LlamaIndex is a new library, and changes fast. It's important that you pin your version to the one above so you don't run into any code errors as you follow along with me throughout the course.
@@ -53,7 +53,7 @@ LlamaIndex is a new library, and changes fast. It's important that you pin your 
 We'll make use of Qdrant as our vector database through this course. Let's install the dependencies for that.
 
 ```python
-pip install qdrant-client==1.8.0
+pip install qdrant-client==1.9.1
 ```
 
 Again, it's important to pin the version to the one above so we're on the same page while coding.
@@ -63,19 +63,21 @@ Again, it's important to pin the version to the one above so we're on the same p
 LlamaIndex has it's dependencies nicely seperated out. Let's install what we need for Qdrant:
 
 ```python
-pip install llama-index-vector-stores-qdrant llama-index-readers-file
+pip install llama-index-vector-stores-qdrant==0.2.8 llama-index-readers-file==0.1.22
 ```
 
 # Install LLM Libraries
 
-We'll conistently make use of Cohere and FastEmbed throughout the course, so let's install those dependencies as well.
+We'll conistently make use of Cohere and OpenAI throughout the course, so let's install those dependencies as well.
 
 ```python
-pip install cohere==5.2.5 
-pip install fastembed
-pip install llama-index-llms-cohere==0.1.6 
-pip install llama-index-embeddings-cohere==0.1.7 llama-index-embeddings-fastembed
-pip install llama-index-postprocessor-cohere-rerank==0.1.4 
+pip install cohere==5.5.0 
+pip install openai==1.30.1
+pip install llama-index-llms-cohere==0.2.0 
+pip install llama-index-llms-openai==0.1.19
+pip install llama-index-embeddings-cohere==0.1.8
+pip install llama-index-embeddings-openai==0.1.9
+pip install llama-index-postprocessor-cohere-rerank==0.1.6 
 ```
 
 # Link IPython kernel to Conda Enviornment
