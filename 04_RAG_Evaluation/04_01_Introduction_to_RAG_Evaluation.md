@@ -2,88 +2,99 @@
 
 📏 Evaluation gives you concrete numbers that tell you how accurate the system is, how relevant its answers are, and how well it's working overall.
 
-🔍 With an evaluation system, you can compare different models, prompts, and contexts to determine what works best.
+🔍 With an evaluation system, you can:
 
-📈 Regular evaluation will help you assess the quality of your RAG pipeline over time.
+- 📊 Compare different models, prompts, contexts, and retrieval strategies to determine what works best.
 
-Without checking in on the RAG system's performance, it's difficult to know what needs fixing and how to improve it.
+- 📈 Assess the quality of your RAG pipeline over time.
+
+- Determine what part of the pipeline needs improving and how to improve it.
 
 ## Recall the basic steps in creating a RAG system
 
- - Create an Index
+ - 📚 Create an Index
 
- - Retrieval relevant context from our Index that is similar to our query
+ - 🔎 Retrieval of relevant context from our Index that is similar to our query
 
- - Generate responses based on the retrieved context by injecting the retrieved context into a prompt and sending that to an LLM
+ - 🤖 Generate responses based on the retrieved context by injecting the retrieved context into a prompt and sending that to an LLM
 
 <img src="../image_assets/rag_system_diagram.png">
-Diagram illustrating the components of a RAG system, including the retriever and generator processes. 
+Diagram illustrating the components of a RAG system, including the retriever and generator processes.
 
 Source: [AI Makerspace](https://youtu.be/Anr1br0lLz8)
 
-# An Overview of RAG Challenges
+## You can essentially think of a RAG system as consisting of two components
 
-| Stage        | Challenge Area            | Specific Challenges          | Description                                                                 |
-|--------------|---------------------------|------------------------------|-----------------------------------------------------------------------------|
-| Retrieval    | Relevance                 | Precision & Recall Issues    | Difficulty retrieving all relevant documents while excluding irrelevant ones. |
-|              |                           | "Lost in the Middle"         | Challenges in retrieving documents with moderate relevance.                  |
-| Augmentation | Temporal Relevance        | Outdated Information         | Augmentation data may be outdated, leading to inaccurate information.        |
-|              | Contextual Understanding  | Missing Relational Context   | Difficulty understanding relationships between documents due to lack of context. |
-| Generation   | Hallucination             | Factual Errors               | Generation of plausible-sounding but incorrect information.                  |
-|              | Bias & Toxicity           | Harmful & Inappropriate Outputs | Generation of biased, offensive, or harmful content.                        |
-|              | Response Diversity        | Limited Creativity           | Challenges in generating diverse and creative responses.                     |
+Those components are:
 
-## Evaluating Different RAG Components
+1) Retrieval
 
-A RAG pipeline has two main parts: retrieval and generation.
+2) Generation
 
-### **🔍 Retrieval component**
+### Retrieval
 
-This fetches external context from the vector database.
+The retrieval component fetches relevant information from external knowledge sources to inform the generation process. This itself is two main phases: indexing and searching.
 
-If the retriever makes mistakes, those mistakes will carry over to the generator. The retrieved sources must be relevant to the user's query.
+**📚 Indexing phase:** Documents are organized for efficient retrieval
 
-So, You need a way to measure how closely the retrieved context matches what the user is asking about.
+**🔍 Searching phase:** Indexes are used to fetch relevant documents based on the user's query
 
-### **🤖 Generation component**
+**Retrieval component challenges:**
 
-This combines a prompt template, the user's question, and the context it retrieved to generate an answer using an LLM. 
+ - Evaluating effectiveness in filtering and selecting pertinent information
 
-You want the generated response to be grounded in the retrieved context, relevant to the user's query, and adhere to any guidelines you have in place.
+ - Assessing the relevance and usefulness of retrieved data
 
-You need a way to measure the relevance of responses to the retrieved context and the coherence and fluency of the generated responses.
+### Generation
 
-We need to check how well these components work on their own and 
-together.
+The generation component takes the retrieved context passages and the original query as input to generate a coherent and contextually appropriate output.
 
-# Aspects of Evaluation
+**Generation component challenges:**
 
-When looking at retrieval and generation, there are two main things to measure: quality and ability.
+ - Ensuring LLM utilizes retrieved context passages effectively
 
-### 📊 Measuring Quality
+ - Assessing factual correctness, relevance, and coherence
 
-Quality is measured via relevance and faithfulness.
+## How to evaluate these components
 
- **🎯 Relevance** 
- 
- Relevance should be measured for the retrieved context and the generated response.
- 
- The retrieved context should be precise. The more relevant each bit of retrieved-context is, the better the generation will be.
+**Retrieval Evaluation: Are the retrieved sources relevant to the query?**
 
- The generated answers should be directly relevant to the user's query.
+- Evaluate how well the retrieved documents match the information needed in the query
 
- **🤝 Faithfulness** 
- 
- This ensures that the answers the system generates *are faithful to the context it retrieved*. The generated response shouldn't contain contradictions or inconsistencies.
+- Assess how accurate the retrieved documents are compared to a set of candidate documents
 
-### 🏹 Measuring Ability
+- Measure the system's ability to identify and score relevant documents higher than less relevant or irrelevant ones
 
-**🔇 Noise Robustness:** This checks how well the model handles noisy contexts. These contexts relate to the question but don't have helpful information.
+**Generation Evaluation: Does the response match the retrieved context and the query?**
 
-**🙅‍♂️ Negative Rejection:** This looks at how well the model knows when to say, "I don't know." If the retrieved context doesn't have the info needed to answer the question, it should not try to answer.
+- Measure how well the generated response aligns with the intent and content of the initial query
 
-**🧩 Information Integration:** This test measures the model's ability to combine context from multiple documents. This is important for handling complex questions that require context from different sources.
+- Evaluate if the generated response accurately reflects the information contained within the source documents
 
-**🔮 Counterfactual Robustness:** This checks if the model can spot and ignore things in retrieved-context that it knows are wrong, even if it's told there might be some misinformation info in them.
+## The two main aspects of evaluation:
 
-When evaluating **retrieval quality**, context relevance and noise robustness are important. In contrast, for evaluating **generation quality**, answer faithfulness, answer relevance, negative rejection, information integration, and counterfactual robustness should be considered.
+1. 📊 Quality
+
+2. 🏹 Ability
+
+### 📊 Quality
+
+Quality is measured via:
+
+- **🎯 Relevance:** Ensure the retrieved context is precise and the generated answers directly relate to the user's query.
+
+- **🤝 Faithfulness:** Ensure the generated responses are consistent with the retrieved context and do not contain contradictions or inconsistencies.
+
+### 🏹 Ability
+
+Ability encompasses various factors such as:
+
+- **🔇 Noise Robustness:** Handle noisy contexts effectively.
+
+- **🙅‍♂️ Negative Rejection:** Know when to admit lack of knowledge.
+
+- **🧩 Information Integration:** Combine information from multiple sources.
+
+- **🔮 Counterfactual Robustness:** Identify and ignore misinformation.
+
+## In the next section, I'll give a brief overview of the three core evaluation metrics.
