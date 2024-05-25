@@ -18,7 +18,8 @@
 
  - 🤖 Generate responses based on the retrieved context by injecting the retrieved context into a prompt and sending that to an LLM
 
-<img src="../image_assets/rag_system_diagram.png">
+<img src="../image_assets/rag_system_diagram.png" width="70%">
+
 Diagram illustrating the components of a RAG system, including the retriever and generator processes.
 
 Source: [AI Makerspace](https://youtu.be/Anr1br0lLz8)
