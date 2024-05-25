@@ -85,3 +85,13 @@ pip install llama-index-postprocessor-cohere-rerank==0.1.6
 ```python
 python -m ipykernel install --user --name=lil_llama_index --display-name "LlamaIndex (LinkedIn Learning)"
 ```
+
+# Automate the setup
+
+PS: To make it easy on you if you have to terminate your codespace and start from scratch, I created a bash script you can run. It's in this directory and is `install.sh`.
+
+To run this script:
+
+- Make the script executable: `chmod +x install.sh`
+
+- Run the script: `./install.sh`
